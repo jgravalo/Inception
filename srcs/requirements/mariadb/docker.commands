@@ -1,0 +1,7 @@
+
+[200~Command 'docker' not found, but can be installed with:
+snap install docker         # version 24.0.5, or
+apt  install podman-docker  # version 3.4.4+ds1-1ubuntu1.22.04.2
+apt  install docker.io      # version 24.0.5-0ubuntu1~22.04.1
+See 'snap info docker' for additional versions.
+
