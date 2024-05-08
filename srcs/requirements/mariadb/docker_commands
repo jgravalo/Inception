@@ -1,0 +1,1 @@
+docker rmi -f test && docker build -t test . && docker run test

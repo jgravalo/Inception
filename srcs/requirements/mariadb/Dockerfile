@@ -2,9 +2,16 @@ FROM debian:10.11
 
 RUN apt-get update && apt-get install -y mariadb-server
 
-COPY ./tools/mariadb.sh /usr/local/bin/
+#COPY ./conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN chmod +x /usr/local/bin/mariadb.sh
+COPY ./tools/mariadb.sh /
 
-ENTRYPOINT ["/usr/local/bin/mariadb.sh"]
+RUN mkdir -p /var/run/mysqld/ && chown -R root:mysql /var/run/mysqld && chmod 777 /var/run/mysqld/ 
 
+EXPOSE 3306
+
+RUN service mysql start
+
+#RUN mysql_install_db
+
+CMD ["/mariadb.sh"]

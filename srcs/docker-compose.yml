@@ -1,0 +1,24 @@
+networks:
+  jgravalo-dockernet:
+    name: jgravalo-dockernet
+    driver: bridge
+
+services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: always
+    networks:
+      - jgravalo-dockernet
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/jgravalo/data/mysql
+      o: bind
