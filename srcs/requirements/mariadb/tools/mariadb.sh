@@ -12,5 +12,5 @@ echo "/var/run/mysqld/ "
 ls -l /var/run/mysqld/
 ls -l /var/run/
 
-
+#mysqld
 mariadb
