@@ -5,13 +5,17 @@ down:
 	@docker compose -f ./srcs/docker-compose.yml down
 
 ls:
-	@docker ps
+	@echo containers:
+	@docker ps -a
 	@echo
-	@docker images
+	@echo images:
+	@docker images -a
 	@echo
-	@docker volume ls
+	@echo volumes:
+	@docker volume ls 
 	@echo
-	@docker network ls
+	@echo networks:
+	@docker network ls 
 
 clean:
 	@#rm -rf /home/jgravalo/data/mysql/* #borra archivos de mysql
