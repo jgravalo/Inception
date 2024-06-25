@@ -4,6 +4,15 @@ networks:
     driver: bridge
 
 services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .requirements/mariadb
+    image: nginx
+    restart: always
+    networks:
+      - jgravalo-dockernet
+
   mariadb:
     container_name: mariadb
     build:
