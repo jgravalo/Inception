@@ -26,6 +26,7 @@ clean:
 	@docker rmi -f $$(docker images -qa) #borra imagen
 	@docker volume rm $$(docker volume ls -q) #borra volumen
 	@docker network rm jgravalo-dockernet #borra red
+	@#docker network rm $$(docker network ls -q | grep -v "bridge" | grep -v "host" | grep -v "none")
 
 re:
 	make clean
