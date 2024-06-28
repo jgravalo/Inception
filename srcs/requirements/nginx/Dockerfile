@@ -2,8 +2,11 @@ FROM debian:10.11
 
 RUN apt-get update && \
 	apt-get install -y \
-	nginx-core
+	nginx
 
-COPY ./tools/mariadb.sh /
+COPY ./tools/nginx.sh /var/www/
+COPY ./conf/default /etc/nginx/sites-enabled/default
 
-CMD ["/mariadb.sh"]
+EXPOSE 443
+
+CMD ["nginx"]

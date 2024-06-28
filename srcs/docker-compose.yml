@@ -6,17 +6,19 @@ networks:
 services:
   nginx:
     container_name: nginx
-    build:
-      context: .requirements/mariadb
+    build: requirements/nginx
     image: nginx
+    #ports:
+    #  -443:443
+    volumes:
+      - wordpress_data:/var/www/html
     restart: always
     networks:
       - jgravalo-dockernet
 
   mariadb:
     container_name: mariadb
-    build:
-      context: ./requirements/mariadb
+    build: ./requirements/mariadb
     image: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -31,3 +33,11 @@ volumes:
       type: none
       device: /home/jgravalo/data/mysql
       o: bind
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/jgravalo/data/wordpress
+      o: bind
+
