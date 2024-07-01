@@ -14,4 +14,4 @@ EXPOSE 3306
 
 #RUN mysql_install_db
 
-ENTRYPOINT ["nginx"]
+ENTRYPOINT ["./mariadb.sh"]

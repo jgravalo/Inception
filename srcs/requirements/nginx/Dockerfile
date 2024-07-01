@@ -9,4 +9,4 @@ COPY ./conf/default /etc/nginx/sites-enabled/default
 
 EXPOSE 443
 
-CMD ["nginx"]
+CMD ["nginx", "-g", "daemon off;"]

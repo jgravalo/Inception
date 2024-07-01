@@ -21,11 +21,15 @@ clean:
 	@#rm -rf /home/jgravalo/data/mysql/* #borra archivos de mysql
 	@#rm -rf /home/jgravalo/data/wordpress/* #borra archivos de wordpress
 	@docker stop $$(docker ps -qa) #??
-	@echo ----------------------
+	@echo -------- CONTAINERS STOPPED --------
 	@docker rm $$(docker ps -qa) #borra contenedor
+	@echo -------- CONTAINERS DELETED --------
 	@docker rmi -f $$(docker images -qa) #borra imagen
+	@echo -------- IMAGES DELETED --------
 	@docker volume rm $$(docker volume ls -q) #borra volumen
+	@echo -------- VOLUMES DELETED --------
 	@docker network rm jgravalo-dockernet #borra red
+	@echo -------- NETWORKS DELETED --------
 	@#docker network rm $$(docker network ls -q | grep -v "bridge" | grep -v "host" | grep -v "none")
 
 re:
