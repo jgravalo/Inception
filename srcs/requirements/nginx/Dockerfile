@@ -2,13 +2,16 @@ FROM debian:10.11
 
 RUN apt-get update && \
 	apt-get install -y \
-	nginx
+	nginx openssl
 
-COPY /var/www/html /var/www/
-#COPY ./tools/nginx.sh /var/www/
-#COPY ./conf/default /etc/nginx/sites-enabled/default
-COPY /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/default
+COPY ./tools/index.html /var/www/index.nginx-debian.html
+COPY ./tools/nginx.sh /var/www/
+COPY ./conf/default /etc/nginx/sites-enabled/default
+
+RUN chmod +x /var/www/nginx.sh
 
 EXPOSE 443
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/var/www/nginx.sh"]
+
+#CMD ["nginx", "-g", "daemon off;"]
