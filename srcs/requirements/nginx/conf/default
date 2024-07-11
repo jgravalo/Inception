@@ -47,8 +47,11 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.nginx-debian.html;
 
-	server_name _;
+	# server_name _;
 	server_name jgravalo.42.fr;
+
+	# error pages
+	error_page 400 index.html;
 
 	location / {
 		# First attempt to serve request as file, then
