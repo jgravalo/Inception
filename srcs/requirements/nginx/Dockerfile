@@ -10,6 +10,8 @@ COPY ./conf/default /etc/nginx/sites-enabled/default
 
 RUN chmod +x /var/www/nginx.sh
 
+EXPOSE 80
+
 EXPOSE 443
 
 ENTRYPOINT ["/var/www/nginx.sh"]

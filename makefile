@@ -1,8 +1,8 @@
 all:
-	@docker compose -f ./srcs/docker-compose.yml up -d --build
+	@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
-	@docker compose -f ./srcs/docker-compose.yml down
+	@docker-compose -f ./srcs/docker-compose.yml down
 
 ls:
 	@echo containers:
@@ -36,4 +36,4 @@ re:
 	make clean
 	make all
 
-.PHONY: all down clean
+.PHONY: all down ls clean

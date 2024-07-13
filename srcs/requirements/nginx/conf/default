@@ -19,13 +19,13 @@
 # Default server configuration
 #
 server {
-	# listen 443 default_server;
-	# listen [::]:443 default_server;
+	 listen 80 default_server;
+	# listen [::]:80 default_server;
 
 	# SSL configuration
 	#
 	listen 443 ssl default_server;
-	listen [::]:443 ssl default_server;
+	#listen [::]:443 ssl default_server;
 
 	ssl_certificate /etc/ssl/certs/nginx.crt;
     ssl_certificate_key /etc/ssl/private/nginx.key;
@@ -51,7 +51,7 @@ server {
 	server_name jgravalo.42.fr;
 
 	# error pages
-	error_page 400 index.html;
+	# error_page 400 index.html;
 
 	location / {
 		# First attempt to serve request as file, then
