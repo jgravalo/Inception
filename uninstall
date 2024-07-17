@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Actualiza la lista de paquetes
+sudo apt update
+
+# Desinstala Nginx y sus dependencias
+sudo apt remove --purge nginx nginx-common -y
+
+# Elimina cualquier archivo de configuración residual
+sudo apt autoremove -y
+sudo apt autoclean
+
+# Verifica si Nginx ha sido desinstalado
+if ! command -v nginx &> /dev/null; then
+    echo "Nginx ha sido desinstalado correctamente."
+else
+    echo "Nginx no se pudo desinstalar."
+fi
