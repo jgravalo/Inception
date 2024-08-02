@@ -9,7 +9,7 @@ services:
     build: requirements/nginx
     image: nginx
     ports:
-      - "8080:80"
+      - "8020:80"
       - "443:443"
     volumes:
       - wordpress_data:/var/www/html
