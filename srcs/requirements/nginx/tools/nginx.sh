@@ -4,6 +4,10 @@ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/ngi
 echo "Nginx: ssl is set up!";
 
 echo
+echo www/:
+ls /var/www/
+
+echo
 echo www/html:
 ls /var/www/html/
 echo

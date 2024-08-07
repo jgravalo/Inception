@@ -9,7 +9,7 @@ services:
     build: requirements/nginx
     image: nginx
     ports:
-      - "8020:80"
+      - "8080:80"
       - "443:443"
     volumes:
       - wordpress_data:/var/www/html
@@ -32,13 +32,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/jgravalo/data/mysql
+      device: /home/${USER}/data/mysql
       o: bind
 
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/jgravalo/data/wordpress
+      device: /home/${USER}/data/wordpress
       o: bind
 
