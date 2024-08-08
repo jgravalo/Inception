@@ -1,4 +1,5 @@
 #!/bin/bash
+
 service mysql start
 
 if [ ! -d /var/lib/mysql/${MYSQL_DATABASE} ];

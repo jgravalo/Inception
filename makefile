@@ -7,6 +7,15 @@ down:
 	$(MAKE) kill
 	@docker-compose -f ./srcs/docker-compose.yml down
 
+install:
+	sudo echo preparing...
+	mkdir /home/$(USER)/data/
+	mkdir /home/$(USER)/data/mysql/
+	mkdir /home/$(USER)/data/wordpress/
+	sudo groupadd docker
+	sudo usermod -aG docker $(USER)
+	newgrp docker
+
 ls:
 	@echo containers:
 	@docker ps -a
