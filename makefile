@@ -1,8 +1,20 @@
+#PID	= 
+
 all:
 	@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
+	$(MAKE) kill
 	@docker-compose -f ./srcs/docker-compose.yml down
+
+install:
+	sudo echo preparing...
+	mkdir /home/$(USER)/data/
+	mkdir /home/$(USER)/data/mysql/
+	mkdir /home/$(USER)/data/wordpress/
+	sudo groupadd docker
+	sudo usermod -aG docker $(USER)
+	newgrp docker
 
 ls:
 	@echo containers:
@@ -17,9 +29,13 @@ ls:
 	@echo networks:
 	@docker network ls 
 
+kill:
+	sudo kill $$(docker inspect nginx | grep '"Pid":' | awk -F' ' '{print $$2}' | sed 's/,//')
+
 clean:
-	@#rm -rf /home/jgravalo/data/mysql/* #borra archivos de mysql
-	@#rm -rf /home/jgravalo/data/wordpress/* #borra archivos de wordpress
+	$(MAKE) kill
+	sudo rm -rf /home/$(USER)/data/mysql/* #borra archivos de mysql
+	sudo rm -rf /home/$(USER)/data/wordpress/* #borra archivos de wordpress
 	@docker stop $$(docker ps -qa) #??
 	@echo -------- CONTAINERS STOPPED --------
 	@docker rm $$(docker ps -qa) #borra contenedor
@@ -36,4 +52,4 @@ re:
 	make clean
 	make all
 
-.PHONY: all down ls clean
+.PHONY: all down ls kill clean
