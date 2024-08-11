@@ -20,6 +20,4 @@ EXPOSE 443
 
 ENTRYPOINT ["/var/www/nginx.sh"]
 
-RUN ls
-
 CMD ["nginx", "-g", "daemon off;"]

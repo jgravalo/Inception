@@ -17,29 +17,31 @@ server {
 
 	location / {
 		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
+		try_files $uri $uri/ /index.php$is_args$args; # as directory, then fall back to displaying a 404.
 		# No almacenar en caché
-		# Evita que el navegador y proxies almacenen en caché el recurso.
-		add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
-		# Un encabezado más antiguo utilizado para evitar la caché en navegadores que lo soportan.
-		add_header Pragma "no-cache";
-		# Establece la fecha de caducidad en una fecha pasada, lo que obliga al navegador a considerar el recurso como expirado.
-		add_header Expires 0;
-		# Forzar siempre la revalidación. Desactiva los ETags para forzar al navegador a solicitar el recurso nuevamente en cada carga.
-		etag off;
+		add_header Pragma "no-cache"; # Evita que el navegador y proxies almacenen en caché el recurso.
+		add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"; # Un encabezado más antiguo utilizado para evitar la caché en navegadores que lo soportan.
+		add_header Expires 0; # Establece la fecha de caducidad en una fecha pasada, lo que obliga al navegador a considerar el recurso como expirado.
+		etag off; # Forzar siempre la revalidación. Desactiva los ETags para forzar al navegador a solicitar el recurso nuevamente en cada carga.
 	}
 
 	# pass PHP scripts to FastCGI server
 	#
-	#location ~ \.php$ {
+	location ~ \.php$ {
 	#	include snippets/fastcgi-php.conf;
 	#
 	#	# With php-fpm (or other unix sockets):
 	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
 	#	# With php-cgi (or other tcp sockets):
-	#	fastcgi_pass 127.0.0.1:9000;
-	#}
+		try_files $uri =404; # as directory, then fall back to displaying a 404.
+        fastcgi_split_path_info ^(.+\.php)(/.+)$; # divide la URI en archivo .php e info adicional
+        fastcgi_pass wordpress:9000; # envia al host ...
+        fastcgi_index index.php; # establece indice
+        include fastcgi_params; # incluye un archivo con parametros nesarios para php-fpm. QUERY_STRING, REQUEST_METHOD, CONTENT_TYPE...
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; # Establece la variable SCRIPT_FILENAME, que es una de las variables más importantes para PHP.
+        fastcgi_param PATH_INFO $fastcgi_path_info; # Establece la variable PATH_INFO con el valor de $fastcgi_path_info.
+        fastcgi_read_timeout 300; # establece tiempo maximo
+	}
 
 	# deny access to .htaccess files, if Apache's document root
 	# concurs with nginx's one
