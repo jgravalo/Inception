@@ -4,7 +4,6 @@ all:
 	@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
-	$(MAKE) kill
 	@docker-compose -f ./srcs/docker-compose.yml down
 
 install:
@@ -33,20 +32,25 @@ kill:
 	sudo kill $$(docker inspect nginx | grep '"Pid":' | awk -F' ' '{print $$2}' | sed 's/,//')
 
 clean:
-	$(MAKE) kill
 	sudo rm -rf /home/$(USER)/data/mysql/* #borra archivos de mysql
 	sudo rm -rf /home/$(USER)/data/wordpress/* #borra archivos de wordpress
-	@docker stop $$(docker ps -qa) #??
-	@echo -------- CONTAINERS STOPPED --------
-	@docker rm $$(docker ps -qa) #borra contenedor
+	@if [ ! -z "$$(docker ps -aq)" ]; then \
+		docker stop $$(docker ps -aq); \
+		docker rm $$(docker ps -aq); \
+	fi
 	@echo -------- CONTAINERS DELETED --------
-	@docker rmi -f $$(docker images -qa) #borra imagen
+	@if [ ! -z "$$(docker images -aq)" ]; then \
+		docker rmi $$(docker images -aq); \
+	fi	
 	@echo -------- IMAGES DELETED --------
-	@docker volume rm $$(docker volume ls -q) #borra volumen
+	@if [ ! -z "$$(docker volume ls -q)" ]; then \
+		docker volume rm $$(docker volume ls -q); \
+	fi
 	@echo -------- VOLUMES DELETED --------
-	@docker network rm jgravalo-dockernet #borra red
+	@if [ ! -z "$$(docker network ls -q --filter type=custom)" ]; then \
+		docker network rm $$(docker network ls -q --filter type=custom); \
+	fi
 	@echo -------- NETWORKS DELETED --------
-	@#docker network rm $$(docker network ls -q | grep -v "bridge" | grep -v "host" | grep -v "none")
 
 re:
 	make clean

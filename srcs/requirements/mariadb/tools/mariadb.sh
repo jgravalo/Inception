@@ -2,15 +2,20 @@
 
 service mysql start
 
-if [ ! -d /var/lib/mysql/${MYSQL_DATABASE} ];
+if [ ! -d /var/lib/mysql/${DB_NAME} ];
 then
-	mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE $MYSQL_DATABASE;" # crear base de datos con usuario root
-	mysql -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'" # crear usuario
-	mysql -e "GRANT ALL ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION;" # otorgar permisos
-	mysql -e "FLUSH PRIVILEGES;" # recargar privilegios
-	mysql -e "ALTER USER '${MYSQL_ROOT_USER}'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" # cambiar contraseña root
+	# crear base de datos con usuario root
+	mysql -u ${DB_ROOT_USER} -p${DB_ROOT_PASS} -e "CREATE DATABASE $DB_NAME;"
+	# crear usuario
+	mysql -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS'"
+	# otorgar permisos
+	mysql -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS' WITH GRANT OPTION;"
+	# recargar privilegios
+	mysql -e "FLUSH PRIVILEGES;"
+	# cambiar contraseña root
+	mysql -e "ALTER USER '${DB_ROOT_USER}'@'localhost' IDENTIFIED BY '${DB_ROOT_PASS}';"
 fi
 
-mysqladmin -u ${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD} shutdown # apaga el servidor
+mysqladmin -u ${DB_ROOT_USER} --password=${DB_ROOT_PASS} shutdown # apaga el servidor
 
 mysqld # enciende el servidor en demonio (segundo plano)

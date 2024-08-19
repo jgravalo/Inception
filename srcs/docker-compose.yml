@@ -9,7 +9,7 @@ services:
     build: requirements/nginx
     image: nginx
     ports:
-      - "8000:80"
+      - "8080:80"
       - "443:443"
     volumes:
       - wordpress_data:/var/www/html
@@ -26,6 +26,21 @@ services:
     restart: always
     networks:
       - jgravalo-dockernet
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
+    restart: always
+    networks:
+      - jgravalo-dockernet
+    env_file:
+      - .env
+
 
 volumes:
   mariadb_data:
