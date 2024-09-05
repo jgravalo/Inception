@@ -1,4 +1,4 @@
-FROM debian:10.11
+FROM debian:oldstable
 
 RUN apt-get update && apt-get install -y mariadb-server
 

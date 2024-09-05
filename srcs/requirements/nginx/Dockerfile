@@ -1,4 +1,4 @@
-FROM debian:10.11
+FROM debian:oldstable
 
 RUN apt-get update && \
 	apt-get install -y \
@@ -6,13 +6,12 @@ RUN apt-get update && \
 
 RUN rm /var/www/html/index.nginx-debian.html
 
+#COPY ./tools/status.sh /var/www/
 COPY ./tools/nginx.sh /var/www/
-COPY ./tools/status.sh /var/www/
+RUN chmod +x /var/www/nginx.sh
 
 COPY ./tools/index.html /var/www/html/
 COPY ./conf/default /etc/nginx/sites-enabled/default
-
-RUN chmod +x /var/www/nginx.sh
 
 EXPOSE 80
 

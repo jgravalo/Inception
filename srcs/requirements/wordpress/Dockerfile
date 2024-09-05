@@ -1,10 +1,12 @@
-FROM debian:10.11
+FROM debian:oldstable
 
 RUN apt-get update && apt-get -y install \
     curl \
-    php7.3-fpm \
-    php7.3-mysqli \
+    php-fpm \
+    php-mysqli \
     mariadb-client
+
+RUN echo aqui
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \

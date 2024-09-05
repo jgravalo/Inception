@@ -18,10 +18,10 @@ server {
 		# First attempt to serve request as file, then
 		try_files $uri $uri/ /index.php$is_args$args; # as directory, then fall back to displaying a 404.
 		# No almacenar en caché
-		#add_header Pragma "no-cache"; # Evita que el navegador y proxies almacenen en caché el recurso.
-		#add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"; # Un encabezado más antiguo utilizado para evitar la caché en navegadores que lo soportan.
-		#add_header Expires 0; # Establece la fecha de caducidad en una fecha pasada, lo que obliga al navegador a considerar el recurso como expirado.
-		#etag off; # Forzar siempre la revalidación. Desactiva los ETags para forzar al navegador a solicitar el recurso nuevamente en cada carga.
+		add_header Pragma "no-cache"; # Evita que el navegador y proxies almacenen en caché el recurso.
+		add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"; # Un encabezado más antiguo utilizado para evitar la caché en navegadores que lo soportan.
+		add_header Expires 0; # Establece la fecha de caducidad en una fecha pasada, lo que obliga al navegador a considerar el recurso como expirado.
+		etag off; # Forzar siempre la revalidación. Desactiva los ETags para forzar al navegador a solicitar el recurso nuevamente en cada carga.
 	}
 
 	# pass PHP scripts to FastCGI server

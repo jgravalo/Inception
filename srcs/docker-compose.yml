@@ -26,6 +26,8 @@ services:
     restart: always
     networks:
       - jgravalo-dockernet
+    env_file:
+      - .env
 
   wordpress:
     container_name: wordpress
