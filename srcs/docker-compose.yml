@@ -1,61 +1,60 @@
 networks:
-  jgravalo-dockernet:
-    name: jgravalo-dockernet
-    driver: bridge
+    jgravalo-dockernet:
+        name: jgravalo-dockernet
+        driver: bridge
 
 services:
-  nginx:
-    container_name: nginx
-    build: requirements/nginx
-    image: nginx
-    ports:
-      - "8080:80"
-      - "443:443"
-    volumes:
-      - wordpress_data:/var/www/html
-    restart: always
-    networks:
-      - jgravalo-dockernet
+    nginx:
+        container_name: nginx
+        build: ./requirements/nginx
+        image: nginx
+        ports:
+         - 443:443
+        volumes:
+         - wordpress_data:/var/www/html
+        restart: always
+        networks:
+         - jgravalo-dockernet
 
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb
-    image: mariadb
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    restart: always
-    networks:
-      - jgravalo-dockernet
-    env_file:
-      - .env
 
-  wordpress:
-    container_name: wordpress
-    build: ./requirements/wordpress
-    image: wordpress
-    depends_on:
-      - mariadb
-    volumes:
-      - wordpress_data:/var/www/html
-    restart: always
-    networks:
-      - jgravalo-dockernet
-    env_file:
-      - .env
+    mariadb:
+         container_name: mariadb
+         build:
+            context: ./requirements/mariadb
+         image: mariadb
+         volumes:
+          - mariadb_data:/var/lib/mysql
+         restart: always
+         networks:
+          - jgravalo-dockernet
+         env_file:
+          - .env
 
+    wordpress:
+        container_name: wordpress
+        build: ./requirements/wordpress
+        image: wordpress
+        depends_on:
+         - mariadb
+        volumes:
+         - wordpress_data:/var/www/html
+        restart: always
+        networks:
+         - jgravalo-dockernet
+        env_file:
+          - .env
 
 volumes:
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${USER}/data/mysql
-      o: bind
+    mariadb_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/${USER}/data/mysql
+            o: bind
 
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/${USER}/data/wordpress
-      o: bind
-
+    wordpress_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/${USER}/data/wordpress
+            o: bind

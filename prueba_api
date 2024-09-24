@@ -1,1 +1,0 @@
-docker exec wordpress curl api.wordpress.org

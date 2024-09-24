@@ -1,22 +1,15 @@
-FROM debian:oldstable
+FROM debian:11.9
 
-RUN apt-get update && \
-	apt-get install -y \
-	nginx openssl
-
-RUN rm /var/www/html/index.nginx-debian.html
-
-#COPY ./tools/status.sh /var/www/
-COPY ./tools/nginx.sh /var/www/
-RUN chmod +x /var/www/nginx.sh
-
-COPY ./tools/index.html /var/www/html/
-COPY ./conf/default /etc/nginx/sites-enabled/default
-
-EXPOSE 80
+RUN apt-get update
+RUN apt-get install -y nginx openssl
 
 EXPOSE 443
 
-ENTRYPOINT ["/var/www/nginx.sh"]
+COPY ./conf/default /etc/nginx/sites-enabled/default
+COPY ./tools/nginx_start.sh /var/www
+
+RUN chmod +x /var/www/nginx_start.sh
+
+ENTRYPOINT [ "var/www/nginx_start.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]

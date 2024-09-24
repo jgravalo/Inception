@@ -1,71 +1,25 @@
 server {
-	listen 80;
-	listen 443 ssl;
-	server_name jgravalo.42.fr;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name jgravalo.42.fr;
 
-	ssl_certificate /etc/ssl/certs/nginx.crt;
+    ssl_certificate /etc/ssl/certs/nginx.crt;
     ssl_certificate_key /etc/ssl/private/nginx.key;
-    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_protocols TLSv1.3;
 
-	root /var/www/html;
-
-	index index.php;
-
-	# error pages
-	# error_page 400 index.html;
-
-	location / {
-		# First attempt to serve request as file, then
-		try_files $uri $uri/ /index.php$is_args$args; # as directory, then fall back to displaying a 404.
-		# No almacenar en caché
-		add_header Pragma "no-cache"; # Evita que el navegador y proxies almacenen en caché el recurso.
-		add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"; # Un encabezado más antiguo utilizado para evitar la caché en navegadores que lo soportan.
-		add_header Expires 0; # Establece la fecha de caducidad en una fecha pasada, lo que obliga al navegador a considerar el recurso como expirado.
-		etag off; # Forzar siempre la revalidación. Desactiva los ETags para forzar al navegador a solicitar el recurso nuevamente en cada carga.
-	}
-
-	# pass PHP scripts to FastCGI server
-	#
-	location ~ \.php$ {
-	#	include snippets/fastcgi-php.conf;
-	#
-	#	# With php-fpm (or other unix sockets):
-	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
-	#	# With php-cgi (or other tcp sockets):
-		try_files $uri =404; # as directory, then fall back to displaying a 404.
-        fastcgi_split_path_info ^(.+\.php)(/.+)$; # divide la URI en archivo .php e info adicional
-        fastcgi_pass wordpress:9000; # envia al host ...
-        fastcgi_index index.php; # establece indice
-        include fastcgi_params; # incluye un archivo con parametros necesarios para php-fpm. QUERY_STRING, REQUEST_METHOD, CONTENT_TYPE...
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; # Establece la variable SCRIPT_FILENAME, que es una de las variables más importantes para PHP.
-        fastcgi_param PATH_INFO $fastcgi_path_info; # Establece la variable PATH_INFO con el valor de $fastcgi_path_info.
-        fastcgi_read_timeout 300; # establece tiempo maximo
-	}
-
-	# deny access to .htaccess files, if Apache's document root
-	# concurs with nginx's one
-	#
-	#location ~ /\.ht {
-	#	deny all;
-	#}
+    index index.php;
+    root /var/www/html;
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass wordpress:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_read_timeout 300;
+    }
 }
-
-
-# Virtual Host configuration for example.com
-#
-# You can move that to a different file under sites-available/ and symlink that
-# to sites-enabled/ to enable it.
-#
-#server {
-#	listen 80;
-#	listen [::]:80;
-#
-#	server_name example.com;
-#
-#	root /var/www/example.com;
-#	index index.html;
-#
-#	location / {
-#		try_files $uri $uri/ =404;
-#	}
-#}
