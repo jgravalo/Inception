@@ -1,19 +1,19 @@
-# docker
+# downlaod docker
 sudo apt install docker.io
 
-# group docker
+# add group docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
-# compose
-sudo mkdir /usr/local/lib/docker
-sudo mkdir /usr/local/lib/docker/cli-plugins
+# download compose
+sudo mkdir /usr/local/lib/docker/
+sudo mkdir /usr/local/lib/docker/cli-plugins/
 sudo touch /usr/local/lib/docker/cli-plugins/docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/lib/docker/cli-plugins/docker-compose
 sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
-#required dirs
-mkdir /home/$USER/data
-mkdir ~/data/wordpress
-mkdir ~/data/mysql
+# required dirs
+mkdir /home/$USER/data/
+mkdir /home/$USER/data/wordpress/
+mkdir /home/$USER/data/mysql/

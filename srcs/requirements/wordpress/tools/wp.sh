@@ -11,4 +11,4 @@ else
 	wp theme install twentysixteen --activate --allow-root
 fi
 
-/usr/sbin/php-fpm7.3 -F;
+/usr/sbin/php-fpm7.4 -F;

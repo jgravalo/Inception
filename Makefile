@@ -13,4 +13,15 @@ clean:
 	@docker volume rm $$(docker volume ls -q)
 	@docker network rm jgravalo-dockernet
 
+ls:
+	@docker ps -a
+	@echo
+	@docker images
+	@echo
+	@docker volume ls
+	@echo
+	@docker network ls
+
+re: clean all
+
 .PHONY: all down clean
