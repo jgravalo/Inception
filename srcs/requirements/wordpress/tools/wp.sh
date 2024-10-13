@@ -1,6 +1,6 @@
 #! /bin/bash
 
-if [ -f ./wp-config.php ]
+if [ ! -f ./wp-config.php ]
 then
 	echo "Wordpress already exists"
 else
