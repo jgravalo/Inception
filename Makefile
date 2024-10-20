@@ -1,17 +1,31 @@
 all:
 	@docker compose -f ./srcs/docker-compose.yml up -d --build
 
+vol:
+	mkdir /home/jgravalo/data/
+	mkdir /home/jgravalo/data/mysql/
+	mkdir /home/jgravalo/data/wordpress/
+	chmod -R 777 /home/jgravalo/data/
+
 down:
 	@docker compose -f ./srcs/docker-compose.yml down
 
 clean:
-	@rm -rf /home/$(USER)/data/mysql/*
-	@rm -rf /home/$(USER)/data/wordpress/*
-	@docker stop $$(docker ps -qa)
-	@docker rm $$(docker ps -qa)
-	@docker rmi $$(docker images -qa)
-	@docker volume rm $$(docker volume ls -q)
-	@docker network rm jgravalo-dockernet
+	rm -rf /home/jgravalo/data/mysql/*
+	rm -rf /home/jgravalo/data/wordpress/*
+	@if [ ! -z "$$(docker ps -aq)" ]; then \
+		docker stop $$(docker ps -aq); \
+		docker rm $$(docker ps -aq); \
+	fi
+	@if [ ! -z "$$(docker images -aq)" ]; then \
+		docker rmi $$(docker images -aq); \
+	fi	
+	@if [ ! -z "$$(docker volume ls -q)" ]; then \
+		docker volume rm $$(docker volume ls -q); \
+	fi
+	@if [ ! -z "$$(docker network ls -q --filter type=custom)" ]; then \
+		docker network rm $$(docker network ls -q --filter type=custom); \
+	fi
 
 ls:
 	@docker ps -a

@@ -17,10 +17,10 @@ RUN chmod 755 /run/php
 
 COPY ./tools/wp.sh /usr/local/bin/wp.sh
 RUN chmod +x /usr/local/bin/wp.sh
-COPY ./tools/start.sh /var/www/start.sh
 
 EXPOSE 9000
 
 WORKDIR /var/www/html/
 
 ENTRYPOINT [ "/usr/local/bin/wp.sh" ]
+
