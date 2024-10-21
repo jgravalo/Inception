@@ -10,11 +10,9 @@ server {
     index index.php;
     root /var/www/html;
     location / {
-        # Desactivar el caché para todas las solicitudes
         add_header Cache-Control "no-cache, no-store, must-revalidate";
         add_header Pragma "no-cache";
         add_header Expires "0";
-        # */
         try_files $uri $uri/ /index.php$is_args$args;
     }
     location ~ \.php$ {
