@@ -36,6 +36,6 @@ ls:
 	@echo
 	@docker network ls
 
-re: clean all
+re: down all
 
 .PHONY: all down clean
