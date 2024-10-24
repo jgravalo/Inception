@@ -13,6 +13,11 @@ sudo touch /usr/local/lib/docker/cli-plugins/docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/lib/docker/cli-plugins/docker-compose
 sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
+# required dirs for data volumes
+mkdir /home/$USER/data/
+mkdir /home/$USER/data/wordpress/
+mkdir /home/$USER/data/mysql/
+
 # required dirs and files structure for project
 mkdir /home/$USER/inception/
 touch /home/$USER/inception/Makefile
@@ -21,25 +26,20 @@ touch /home/$USER/inception/srcs/docker-compose.yml
 touch /home/$USER/inception/srcs/.env
 mkdir /home/$USER/inception/srcs/requirements/
 mkdir /home/$USER/inception/srcs/requirements/nginx/
-mkdir /home/$USER/inception/srcs/requirements/wordpress/
-mkdir /home/$USER/inception/srcs/requirements/mariadb/
 touch /home/$USER/inception/srcs/requirements/nginx/Dockerfile
 mkdir /home/$USER/inception/srcs/requirements/nginx/conf/
+touch /home/$USER/inception/srcs/requirements/nginx/conf/default
+mkdir /home/$USER/inception/srcs/requirements/nginx/tools/
+touch /home/$USER/inception/srcs/requirements/nginx/tools/nginx_start.sh
+mkdir /home/$USER/inception/srcs/requirements/wordpress/
 touch /home/$USER/inception/srcs/requirements/wordpress/Dockerfile
 mkdir /home/$USER/inception/srcs/requirements/wordpress/conf/
+touch /home/$USER/inception/srcs/requirements/wordpress/conf/www.conf
+mkdir /home/$USER/inception/srcs/requirements/wordpress/tools/
+touch /home/$USER/inception/srcs/requirements/wordpress/tools/wp.sh
+mkdir /home/$USER/inception/srcs/requirements/mariadb/
 touch /home/$USER/inception/srcs/requirements/mariadb/Dockerfile
 mkdir /home/$USER/inception/srcs/requirements/mariadb/conf/
-touch /home/$USER/inception/srcs/requirements/nginx/conf/default
-touch /home/$USER/inception/srcs/requirements/wordpress/conf/www.conf
 touch /home/$USER/inception/srcs/requirements/mariadb/conf/mariadb.conf
-mkdir /home/$USER/inception/srcs/requirements/nginx/tools/
-mkdir /home/$USER/inception/srcs/requirements/wordpress/tools/
 mkdir /home/$USER/inception/srcs/requirements/mariadb/tools/
-touch /home/$USER/inception/srcs/requirements/nginx/tools/nginx_start.sh
-touch /home/$USER/inception/srcs/requirements/wordpress/tools/wp.sh
 touch /home/$USER/inception/srcs/requirements/mariadb/tools/mariadb.sh
-
-# required dirs for data volumes
-mkdir /home/$USER/data/
-mkdir /home/$USER/data/wordpress/
-mkdir /home/$USER/data/mysql/
